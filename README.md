@@ -46,4 +46,5 @@ To begin using the iTask Backend, follow these steps:
 ## API Documentation
 
 Detailed API documentation: https://documenter.getpostman.com/view/21377887/2sA3QmEujy
+Deployed link: https://itask-8f4g.onrender.com
 
