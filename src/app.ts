@@ -7,7 +7,7 @@ import httpLogger from "./common/logging/http-logger";
 import errorHandler from "./middleware/error-handler";
 import router from "./routes";
 
-const app: Application = express() 
+const app = express() 
 app.use(compression());
 app.use(express.json());
 app.use(helmet());

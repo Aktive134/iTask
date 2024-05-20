@@ -17,7 +17,7 @@ router.get("/", (
     })
 });
 router.use(authRouter);
-router.use(validateToken);
+//router.use(validateToken);
 router.use(taskRouter);
 
 export default router

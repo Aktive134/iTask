@@ -17,6 +17,10 @@ class TaskController {
     
       const newTask = new Task({ title, description, userId  });
       await newTask.save();
+
+      const io = req.app.get('io');
+      io.emit('taskCreated', newTask);
+
       res.status(201).json({ message: Messages.taskCreated, status: true });
     },
   )
@@ -25,6 +29,8 @@ class TaskController {
     async (req: Request, res: Response) => {
       const { _id } = res.locals.payload;
       const tasks = await Task.find({ user: _id }).select('-__v');
+      const io = req.app.get('io');
+      io.emit('taskRetrieved', tasks);
       res.json({ message: Messages.taskRetrieved, data: tasks, status: true });
     },
   )
@@ -41,7 +47,9 @@ class TaskController {
 
       task.title = title;
       task.description = description;
-      await task.save();
+      const updatedTask = await task.save();
+      const io = req.app.get('io');
+      io.emit('taskUpdated', updatedTask);
       res.json({ message: Messages.taskUpdated, status: true });
     },
   )
@@ -54,6 +62,8 @@ class TaskController {
       if (!task) return res.status(404).json({ message: Messages.taskNotFound });
       if (task.userId.toString() !== _id) return res.status(403).json({ message: Messages.notAuthorised });
       await task.remove();
+      const io = req.app.get('io');
+      io.emit('taskDeleted', id);
       res.json({ message: Messages.taskRemoved, status: true });
     },
   )

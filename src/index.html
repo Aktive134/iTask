@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iTask</title>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+</head>
+<body>
+    <h1>iTask Client Test</h1>
+    <script>
+        const socket = io('http://localhost:6500');
+
+        // Listen for a connection event
+        socket.on('connect', () => {
+            console.log('Connected to Socket.io server');
+        });
+
+        // Listen for custom events
+        socket.on('taskCreated', (task) => {
+            console.log('New task created:', task);
+        });
+        socket.on('taskRetrieved', (task) => {
+            console.log('Task Retrieved:', task);
+        });
+
+        socket.on('taskUpdated', (task) => {
+            console.log('Task updated:', task);
+        });
+
+        socket.on('taskDeleted', (taskId) => {
+            console.log('Task deleted:', taskId);
+        });
+
+        // Listen for the disconnect event
+        socket.on('disconnect', () => {
+            console.log('Disconnected from Socket.io server');
+        });
+    </script>
+</body>
+</html>
